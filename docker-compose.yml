@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  llm-chat:
+    build: .
+    ports:
+      - "8000:8000"
+      - "8501:8501"
+      - "11434:11434"
+    volumes:
+      - .:/app
+      - ~/.ollama:/root/.ollama
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ["/app/start.sh"]
