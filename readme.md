@@ -1,5 +1,7 @@
 # LLM Chat Interface
 
+[中文文档](README_CN.md)
+
 A local LLM chat interface based on Ollama, supporting multiple models and real-time model downloads.
 
 ## Requirements
