@@ -7,6 +7,7 @@ import threading
 import time
 import json
 import requests
+from search import WebSearch
 
 app = FastAPI()
 
@@ -57,6 +58,21 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     response: str
+
+
+class SearchRequest(BaseModel):
+    query: str
+    num_results: int = 5
+
+
+@app.post("/search")
+async def search(request: SearchRequest):
+    try:
+        results = WebSearch.search_duckduckgo(
+            request.query, request.num_results)
+        return {"results": [{"title": r.title, "snippet": r.snippet, "link": r.link} for r in results]}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"搜索失败: {str(e)}")
 
 @app.post("/chat", response_model=ChatResponse)
 @app.post("/chat")
@@ -113,3 +129,13 @@ async def get_download_status(model_name: str):
     if model_name not in download_status:
         raise HTTPException(status_code=404, detail="下载任务不存在")
     return download_status[model_name]
+
+
+@app.post("/search")
+async def search(request: SearchRequest):
+    try:
+        results = WebSearch.search_duckduckgo(
+            request.query, request.num_results)
+        return {"results": [{"title": r.title, "snippet": r.snippet, "link": r.link} for r in results]}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"搜索失败: {str(e)}")

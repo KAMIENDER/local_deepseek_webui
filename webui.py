@@ -11,6 +11,10 @@ st.title("💬 LLM Chat Interface")
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
+# 引用外部CSS文件
+with open("static/style.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
 # 侧边栏配置
 with st.sidebar:
     st.header("模型配置")
@@ -80,22 +84,24 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# 用户输入
-if prompt := st.chat_input("输入你的问题"):
+# 创建固定在底部的输入区域
+chat_input = st.chat_input("输入你的问题")
+
+if chat_input:
     # 添加用户消息到历史
-    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.session_state.messages.append({"role": "user", "content": chat_input})
     with st.chat_message("user"):
-        st.markdown(prompt)
+        st.markdown(chat_input)
     
     # 调用API获取响应
     with st.chat_message("assistant"):
-        with st.spinner("思考中..."): 
+        with st.spinner("思考中..."):
             try:
                 # 构建消息数组
                 messages = []
                 if system_prompt:
                     messages.append({"role": "system", "content": system_prompt})
-                messages.append({"role": "user", "content": prompt})
+                messages.append({"role": "user", "content": chat_input})
                 
                 # 创建响应占位符
                 response_placeholder = st.empty()
@@ -148,7 +154,6 @@ if prompt := st.chat_input("输入你的问题"):
                         st.error(f"请求失败: {response.text}")
                 
                 # 将完整响应添加到会话历史
-                # 如果响应中包含思考过程，只保存实际回答部分
                 if "<think>" in full_response and "</think>" in full_response:
                     parts = full_response.split("</think>")
                     answer = parts[1].strip()
