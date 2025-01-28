@@ -34,7 +34,7 @@ st.title(get_text("title"))
 
 # 初始化会话状态
 if "messages" not in st.session_state:
-    st.session_state.messages = []
+    st.session_state.messages = []  # 每个消息包含 role, content 和可选的 thought
 
 # 引用外部CSS文件
 with open("static/style.css") as f:
@@ -110,6 +110,10 @@ with st.sidebar:
 # 显示聊天历史
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
+        # 如果消息中包含思考过程，创建一个折叠面板显示
+        if "thought" in message and message["thought"]:
+            with st.expander(get_text("view_thoughts"), expanded=False):
+                st.markdown(message["thought"])
         st.markdown(message["content"])
 
 # 创建固定在底部的输入区域
@@ -129,6 +133,9 @@ if chat_input:
                 messages = []
                 if system_prompt:
                     messages.append({"role": "system", "content": system_prompt})
+                # 添加历史消息
+                for message in st.session_state.messages:
+                    messages.append(message)
                 messages.append({"role": "user", "content": chat_input})
                 
                 # 创建响应占位符
@@ -188,8 +195,14 @@ if chat_input:
                 if "<think>" in full_response and "</think>" in full_response:
                     parts = full_response.split("</think>")
                     answer = parts[1].strip()
-                    st.session_state.messages.append({"role": "assistant", "content": answer})
+                    st.session_state.messages.append({
+                        "role": "assistant",
+                        "content": answer
+                    })
                 else:
-                    st.session_state.messages.append({"role": "assistant", "content": full_response})
+                    st.session_state.messages.append({
+                        "role": "assistant",
+                        "content": full_response
+                    })
             except Exception as e:
                 st.error(get_text("error_occurred").format(str(e)))
