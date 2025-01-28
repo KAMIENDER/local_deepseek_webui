@@ -1,24 +1,24 @@
 # LLM Chat Interface
 
-一个基于Ollama的本地LLM聊天界面，支持多种模型和实时下载功能。
+A local LLM chat interface based on Ollama, supporting multiple models and real-time model downloads.
 
-## 环境要求
+## Requirements
 
 - Python 3.11+
 - [Ollama](https://ollama.com/)
-- Docker (可选，用于容器化部署)
+- Docker (optional, for containerized deployment)
 
-## 本地运行
+## Local Setup
 
-### 1. 安装依赖
+### 1. Install Dependencies
 
-#### Python环境
+#### Python Environment
 
-确保您的系统已安装Python 3.11或更高版本：
+Ensure your system has Python 3.11 or higher installed:
 
-- **Windows**：从[Python官网](https://www.python.org/downloads/)下载并安装
-- **macOS**：使用Homebrew安装：`brew install python@3.11`
-- **Linux**：使用包管理器安装：
+- **Windows**: Download and install from [Python's official website](https://www.python.org/downloads/)
+- **macOS**: Install using Homebrew: `brew install python@3.11`
+- **Linux**: Install using package manager:
   ```bash
   # Ubuntu/Debian
   sudo apt update
@@ -28,22 +28,22 @@
   sudo dnf install python3.11
   ```
 
-#### 安装Ollama
+#### Install Ollama
 
-- **Windows**：
-  1. 从[Ollama官网](https://ollama.com/download)下载Windows安装包
-  2. 运行安装程序并按照提示完成安装
+- **Windows**:
+  1. Download Windows installer from [Ollama's website](https://ollama.com/download)
+  2. Run the installer and follow the prompts
 
-- **macOS**：
+- **macOS**:
   ```bash
   curl -fsSL https://ollama.com/install.sh | sh
   ```
 
-- **Linux**：
+- **Linux**:
   ```bash
   curl -fsSL https://ollama.com/install.sh | sh
   ```
-  注意：Linux系统需要先安装依赖：
+  Note: Linux systems require installing dependencies first:
   ```bash
   # Ubuntu/Debian
   sudo apt update && sudo apt install -y ca-certificates curl
@@ -52,68 +52,68 @@
   sudo dnf install -y curl
   ```
 
-#### 安装项目依赖
+#### Install Project Dependencies
 
-克隆项目后，在项目根目录执行：
+After cloning the project, run in the project root directory:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. 启动服务
+### 2. Start Services
 
-#### 方式一：直接运行
+#### Option 1: Direct Run
 
 ```bash
-# 给启动脚本添加执行权限
+# Add execute permission to start script
 chmod +x start.sh
 
-# 运行启动脚本
+# Run start script
 ./start.sh
 ```
 
-#### 方式二：使用Docker
+#### Option 2: Using Docker
 
 ```bash
-# 构建并启动容器
+# Build and start container
 docker-compose up --build
 ```
 
-### 3. 访问服务
+### 3. Access Services
 
-服务启动后，可以通过以下地址访问：
+Once started, services are available at:
 
-- Web界面：http://localhost:8501
-- API接口：http://localhost:8000
-- Ollama服务：http://localhost:11434
+- Web Interface: http://localhost:8501
+- API Endpoint: http://localhost:8000
+- Ollama Service: http://localhost:11434
 
-## 功能特点
+## Features
 
-- 支持多种LLM模型
-- 实时模型下载功能
-- 可调节的模型参数（温度等）
-- 支持系统提示词
-- 美观的Web界面
-- RESTful API支持
+- Support for multiple LLM models
+- Real-time model download capability
+- Adjustable model parameters (temperature, etc.)
+- System prompt support
+- Beautiful web interface
+- RESTful API support
 
-## 目录结构
+## Project Structure
 
 ```
 .
-├── api.py          # FastAPI后端服务
-├── webui.py        # Streamlit前端界面
-├── start.sh        # 启动脚本
-├── requirements.txt # Python依赖
-├── Dockerfile      # Docker构建文件
-└── docker-compose.yml # Docker编排文件
+├── api.py          # FastAPI backend service
+├── webui.py        # Streamlit frontend interface
+├── start.sh        # Startup script
+├── requirements.txt # Python dependencies
+├── Dockerfile      # Docker build file
+└── docker-compose.yml # Docker compose file
 ```
 
-## API文档
+## API Documentation
 
-启动服务后，可以通过访问 http://localhost:8000/docs 查看完整的API文档。
+After starting the service, view the complete API documentation at http://localhost:8000/docs.
 
-## 注意事项
+## Notes
 
-1. 首次运行时会自动下载默认模型（deepseek-r1:7b），这可能需要一些时间
-2. 确保系统中已正确安装并配置Python和Ollama
-3. 使用Docker方式运行时，确保Docker服务已启动
+1. First run will automatically download the default model (deepseek-r1:7b), which may take some time
+2. Ensure Python and Ollama are properly installed and configured on your system
+3. When running with Docker, make sure the Docker service is started
