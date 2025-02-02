@@ -24,7 +24,14 @@ LANGUAGES = {
         "view_thoughts": "View Thoughts",
         "request_failed": "Request failed: {}",
         "error_occurred": "Error occurred: {}",
-        "input_placeholder": "Enter your question"
+        "input_placeholder": "Enter your question",
+        "settings": "Settings",
+        "new_chat": "New Chat",
+        "chat_list": "Chat List",
+        "delete_chat": "Delete Chat",
+        "chat_name": "Chat {}",
+        "rename_chat": "Rename Chat",
+        "confirm_delete": "Are you sure to delete this chat?"
     },
     "zh": {
         "title": "💬 LLM Chat Interface",
@@ -49,6 +56,13 @@ LANGUAGES = {
         "view_thoughts": "查看思考过程",
         "request_failed": "请求失败: {}",
         "error_occurred": "发生错误: {}",
-        "input_placeholder": "输入你的问题"
+        "input_placeholder": "输入你的问题",
+        "settings": "设置",
+        "new_chat": "新建会话",
+        "chat_list": "会话列表",
+        "delete_chat": "删除会话",
+        "chat_name": "会话 {}",
+        "rename_chat": "重命名会话",
+        "confirm_delete": "确定要删除这个会话吗？"
     }
 }
